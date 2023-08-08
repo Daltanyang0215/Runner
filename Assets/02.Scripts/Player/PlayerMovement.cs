@@ -44,17 +44,25 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             _curSpeed += _moveSpeed * _moveAcc * Time.deltaTime;
-            _curSpeed = _moveAcc > _moveSpeed ? _moveSpeed : _moveAcc;
+            _curSpeed = _curSpeed > _moveSpeed ? _moveSpeed : _curSpeed;
         }
-        _moveVec = _inputVec * _curSpeed;
 
-
+        if (OnGoundCheck()) // ∂•¿œ∂ß∏∏ ¿Ãµø¿Ã ∏‘∞‘
+        {
+            _moveVec = _inputVec * _curSpeed;
+            _moveVec = Quaternion.Euler(Vector3.up * _camera.eulerAngles.y) * _moveVec;
+        }
     }
 
+    private bool OnGoundCheck()
+    {
+        return Physics.CheckBox(transform.position + Vector3.up * 0.6f, Vector3.one * 0.7f, Quaternion.identity, 1 << LayerMask.NameToLayer("Ground"));
+    }
 
     public void OnJump()
     {
-        _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
+        if (OnGoundCheck())
+            _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
     }
     public void OnMove(InputValue inputValue)
     {
@@ -67,7 +75,6 @@ public class PlayerMovement : MonoBehaviour
 
         _inputVec = new Vector3(input.x, 0, input.y);
     }
-
     public void OnRun(InputValue inputValue)
     {
         if (inputValue == null) return;
