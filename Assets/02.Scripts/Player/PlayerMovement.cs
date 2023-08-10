@@ -36,21 +36,31 @@ public class PlayerMovement : MonoBehaviour
 
     private void SpeedContorll()
     {
-        if (_isRun)
+        if (OnGoundCheck()) // ∂•¿œ∂ß∏∏ ¿Ãµø¿Ã ∏‘∞‘
         {
-            _curSpeed += _runSpeed * _runAcc * Time.deltaTime;
-            _curSpeed = _curSpeed > _runSpeed ? _runSpeed : _curSpeed;
+            _rb.drag = 3;
+
+            if (_isRun)
+            {
+                _curSpeed += _runSpeed * _runAcc * Time.deltaTime;
+                _curSpeed = _curSpeed > _runSpeed ? _runSpeed : _curSpeed;
+            }
+            else
+            {
+                _curSpeed += _moveSpeed * _moveAcc * Time.deltaTime;
+                _curSpeed = _curSpeed > _moveSpeed ? _moveSpeed : _curSpeed;
+            }
+
+            _moveVec = _inputVec * _curSpeed;
+            _moveVec = Quaternion.Euler(Vector3.up * _camera.eulerAngles.y) * _moveVec;
         }
         else
         {
-            _curSpeed += _moveSpeed * _moveAcc * Time.deltaTime;
-            _curSpeed = _curSpeed > _moveSpeed ? _moveSpeed : _curSpeed;
-        }
+            _rb.drag = 0;
 
-        if (OnGoundCheck()) // ∂•¿œ∂ß∏∏ ¿Ãµø¿Ã ∏‘∞‘
-        {
-            _moveVec = _inputVec * _curSpeed;
-            _moveVec = Quaternion.Euler(Vector3.up * _camera.eulerAngles.y) * _moveVec;
+            //_curSpeed = Mathf.Lerp(_curSpeed, 0, Time.deltaTime);
+            //_moveVec = _moveVec.normalized * _curSpeed;
+            _moveVec = Vector3.zero;
         }
     }
 
