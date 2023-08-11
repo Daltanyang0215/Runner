@@ -14,13 +14,16 @@ public class PlayerRopeLauncher : MonoBehaviour
     private LineRenderer _lineRenderer;
     private RaycastHit _hit;
     private Camera _camera;
-    private Ray CamaraRay => _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
+    private Ray CamaraRay => _camera.ScreenPointToRay(Vector3.right*Screen.width*0.5f+Vector3.up*Screen.height*0.6f);
 
     private void Start()
     {
         _camera = Camera.main;
         _springJoint = GetComponent<SpringJoint>();
         _lineRenderer = GetComponentInChildren<LineRenderer>();
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     private void Update()
@@ -32,7 +35,7 @@ public class PlayerRopeLauncher : MonoBehaviour
         if (Physics.Raycast(CamaraRay, out _hit, int.MaxValue, 1 << LayerMask.NameToLayer("Anchor")) ||
             Physics.SphereCast(CamaraRay, _ropeWidth, out _hit, int.MaxValue, 1 << LayerMask.NameToLayer("Anchor")))
         {
-            Vector3 hitDir = _hit.point - transform.position + Vector3.up;
+            Vector3 hitDir = _hit.point - (transform.position + Vector3.up);
             if (Physics.Raycast(transform.position + Vector3.up, hitDir, out _hit, _ropeDistance, 1 << LayerMask.NameToLayer("Anchor")) ||
                 Physics.SphereCast(transform.position + Vector3.up, _ropeWidth, hitDir, out _hit, _ropeDistance, 1 << LayerMask.NameToLayer("Anchor")))
             {
