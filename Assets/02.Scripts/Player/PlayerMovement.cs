@@ -5,23 +5,21 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private Transform _camera;
     private Vector3 _inputVec;
     private Vector3 _moveVec;
     private Rigidbody _rb;
 
     [SerializeField] private bool _isRun;
     [SerializeField] private float _curSpeed;
-    [SerializeField] private float _curAcc;
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _runSpeed;
     [SerializeField] private float _moveAcc;
     [SerializeField] private float _runAcc;
+    [SerializeField] private float _rotateSpeed;
     [SerializeField] private float _jumpForce;
 
     private void Start()
     {
-        _camera = Camera.main.transform;
         _rb = GetComponent<Rigidbody>();
     }
 
@@ -39,20 +37,31 @@ public class PlayerMovement : MonoBehaviour
         if (OnGoundCheck()) // ¶¥ÀÏ¶§¸¸ ÀÌµ¿ÀÌ ¸Ô°Ô
         {
             _rb.drag = 3;
-
-            if (_isRun)
+            if (_inputVec.z != 0)
             {
-                _curSpeed += _runSpeed * _runAcc * Time.deltaTime;
-                _curSpeed = _curSpeed > _runSpeed ? _runSpeed : _curSpeed;
+                if (_isRun)
+                {
+                    _curSpeed += _runSpeed * _runAcc * Time.deltaTime;
+                    _curSpeed = _curSpeed > _runSpeed ? _runSpeed : _curSpeed;
+                }
+                else
+                {
+                    _curSpeed += _moveSpeed * _moveAcc * Time.deltaTime;
+                    _curSpeed = _curSpeed > _moveSpeed ? _moveSpeed : _curSpeed;
+                }
             }
             else
             {
-                _curSpeed += _moveSpeed * _moveAcc * Time.deltaTime;
-                _curSpeed = _curSpeed > _moveSpeed ? _moveSpeed : _curSpeed;
+                _curSpeed -= _moveSpeed * _moveAcc * Time.deltaTime;
+                _curSpeed = _curSpeed < 0 ? 0 : _curSpeed;
             }
 
-            _moveVec = _inputVec * _curSpeed;
-            _moveVec = Quaternion.Euler(Vector3.up * _camera.eulerAngles.y) * _moveVec;
+
+            //_moveVec = _inputVec * _curSpeed;
+            //_moveVec = Quaternion.Euler(Vector3.up * _camera.eulerAngles.y) * _moveVec;
+            _moveVec = Vector3.forward * _inputVec.z * _curSpeed;
+            _moveVec = Quaternion.Euler(Vector3.up * transform.eulerAngles.y) * _moveVec;
+            //_moveVec = Quaternion.Euler(Vector3.up * _curRotate) * _moveVec;
         }
         else
         {
@@ -61,6 +70,11 @@ public class PlayerMovement : MonoBehaviour
             //_curSpeed = Mathf.Lerp(_curSpeed, 0, Time.deltaTime);
             //_moveVec = _moveVec.normalized * _curSpeed;
             _moveVec = Vector3.zero;
+        }
+
+        if (_inputVec.x != 0)
+        {
+            transform.Rotate(Vector3.up, _inputVec.x * Time.deltaTime * _rotateSpeed);
         }
     }
 
@@ -81,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
             _inputVec = Vector3.zero;
             return;
         }
-        Vector2 input = inputValue.Get<Vector2>().normalized;
+        Vector2 input = inputValue.Get<Vector2>();
 
         _inputVec = new Vector3(input.x, 0, input.y);
     }
