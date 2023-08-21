@@ -4,21 +4,27 @@ using UnityEngine;
 
 public class FieldObjectMovement : MonoBehaviour
 {
+    private FieldObjectManager _manager;
     private Transform _playerPos;
     private float _destroyDistance;
+    private int _index;
     [SerializeField] private Vector3 size = Vector3.one;
 
-    public void Setup(Transform plyerpos, float distace)
+    public void Setup(FieldObjectManager manager, Transform plyerpos, int index, float distace)
     {
+        _manager = manager;
         _playerPos = plyerpos;
+        _index = index;
         _destroyDistance = distace;
     }
 
-    private void Update()
+    
+
+    private void LateUpdate()
     {
-        if(_playerPos.position.z - transform.position.z > _destroyDistance)
+        if (_playerPos.position.z - transform.position.z > _destroyDistance)
         {
-            gameObject.SetActive(false);
+            _manager.ActiveNewLoad(_index);
         }
     }
 

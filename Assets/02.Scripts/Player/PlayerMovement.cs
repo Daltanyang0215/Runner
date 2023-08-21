@@ -9,6 +9,8 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 _moveVec;
     private Rigidbody _rb;
 
+    private bool _isGround;
+
     [SerializeField] private bool _isRun;
     [SerializeField] private float _curSpeed;
     [SerializeField] private float _moveSpeed;
@@ -34,7 +36,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void SpeedContorll()
     {
-        if (OnGoundCheck()) // ∂•¿œ∂ß∏∏ ¿Ãµø¿Ã ∏‘∞‘
+        // πŸ¥⁄ø° ¬¯¡ˆ«“∂ß º¯∞£ ∞°º”¿ª ¡‹
+        if (!_isGround && OnGoundCheck())
+        {
+            _curSpeed = Vector3.Dot(_rb.velocity, transform.forward);
+
+            _rb.velocity = transform.forward * _curSpeed;
+        }
+
+        if (_isGround) // ∂•¿œ∂ß∏∏ ¿Ãµø¿Ã ∏‘∞‘
         {
             _rb.drag = 3;
             if (_inputVec.z != 0)
@@ -56,7 +66,6 @@ public class PlayerMovement : MonoBehaviour
                 _curSpeed = _curSpeed < 0 ? 0 : _curSpeed;
             }
 
-
             //_moveVec = _inputVec * _curSpeed;
             //_moveVec = Quaternion.Euler(Vector3.up * _camera.eulerAngles.y) * _moveVec;
             _moveVec = Vector3.forward * _inputVec.z * _curSpeed;
@@ -76,6 +85,7 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.Rotate(Vector3.up, _inputVec.x * Time.deltaTime * _rotateSpeed);
         }
+        _isGround = OnGoundCheck();
     }
 
     private bool OnGoundCheck()
@@ -85,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnJump()
     {
-        if (OnGoundCheck())
+        if (_isGround)
             _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
     }
     public void OnMove(InputValue inputValue)

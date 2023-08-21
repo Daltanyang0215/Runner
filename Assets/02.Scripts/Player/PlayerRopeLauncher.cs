@@ -58,8 +58,8 @@ public class PlayerRopeLauncher : MonoBehaviour
                     _lineRenderer.SetPosition(1, transform.position + Vector3.up);
 
                     _springJoint.connectedAnchor = _hit.point;// - transform.position;
-                    _springJoint.maxDistance = Vector3.Distance(_hit.point, transform.position + Vector3.up)*0.8f;
-                    _springJoint.minDistance = Vector3.Distance(_hit.point, transform.position + Vector3.up)*0.25f;
+                    _springJoint.maxDistance = Vector3.Distance(_hit.point, transform.position + Vector3.up) * 0.8f;
+                    _springJoint.minDistance = Vector3.Distance(_hit.point, transform.position + Vector3.up) * 0.25f;
 
                     _rb.AddForce(Quaternion.Euler(hitDir) * Vector3.forward * _swingPower, ForceMode.Impulse);
                 }
@@ -76,7 +76,10 @@ public class PlayerRopeLauncher : MonoBehaviour
             _lineRenderer.SetPosition(1, transform.position + Vector3.up);
         }
 
-        if (Mouse.current.leftButton.wasReleasedThisFrame)
+        // 로프 보정.
+        if (Mouse.current.leftButton.wasReleasedThisFrame ||
+             (_springJoint.connectedAnchor.z <transform.position.z && Vector3.Angle(_springJoint.connectedAnchor - transform.position, Vector3.up) > 45f)
+           )
         {
             _lineRenderer.enabled = false;
             _springJoint.maxDistance = float.PositiveInfinity;
