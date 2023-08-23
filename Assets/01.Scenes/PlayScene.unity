@@ -475,8 +475,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: -0.06213745, y: 0.000000017173132, z: 0.0000000010691605, w: 0.9980676}
-  m_LocalPosition: {x: 0, y: 2, z: -5}
+  m_LocalRotation: {x: -0.041558646, y: 0, z: 0, w: 0.9991361}
+  m_LocalPosition: {x: 0, y: 2.5, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1460,8 +1460,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 939527701}
-  m_LocalRotation: {x: -0.06213745, y: 0.000000017173132, z: 0.0000000010691605, w: 0.9980676}
-  m_LocalPosition: {x: 0, y: 2, z: -5}
+  m_LocalRotation: {x: -0.041558646, y: 0, z: 0, w: 0.9991361}
+  m_LocalPosition: {x: 0, y: 2.5, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1749,7 +1749,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 2, z: -6}
+  m_FollowOffset: {x: 0, y: 2.5, z: -4}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -2722,6 +2722,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7269189869014186013, guid: df4b716990baa80499a4641dbb1c1258,
         type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 969d24f687812444a9232029d76e12cb, type: 3}
+    - target: {fileID: 7269189869014186013, guid: df4b716990baa80499a4641dbb1c1258,
+        type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: f3551d2b0697fd24cb6be20f7e2d3667, type: 2}
@@ -2934,6 +2939,7 @@ GameObject:
   - component: {fileID: 1993793974}
   - component: {fileID: 1993793975}
   - component: {fileID: 1993793976}
+  - component: {fileID: 1993793977}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -3027,7 +3033,7 @@ MonoBehaviour:
   _moveAcc: 3
   _runAcc: 4
   _rotateSpeed: 90
-  _jumpForce: 8
+  _jumpForce: 12
 --- !u!114 &1993793975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3069,6 +3075,18 @@ SpringJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 4.5
   m_ConnectedMassScale: 1
+--- !u!114 &1993793977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993793969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2346db5d769ae642ab18ddec4bc0e30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2002563277
 GameObject:
   m_ObjectHideFlags: 3

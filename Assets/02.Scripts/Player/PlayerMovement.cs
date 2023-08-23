@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private PlayerComData playerComData;
+
     private Vector3 _inputVec;
     private Vector3 _moveVec;
     private Rigidbody _rb;
@@ -23,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
+        playerComData = GetComponent<PlayerComData>();
     }
 
     private void Update()
@@ -86,6 +89,7 @@ public class PlayerMovement : MonoBehaviour
             transform.Rotate(Vector3.up, _inputVec.x * Time.deltaTime * _rotateSpeed);
         }
         _isGround = OnGoundCheck();
+        playerComData.AnimatorSetBool("DoGround", _isGround);
     }
 
     private bool OnGoundCheck()
@@ -96,17 +100,22 @@ public class PlayerMovement : MonoBehaviour
     public void OnJump()
     {
         if (_isGround)
+        {
             _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
+            playerComData.AnimatorSetTrigger("OnJump");
+        }
     }
     public void OnMove(InputValue inputValue)
     {
         if (inputValue == null)
         {
             _inputVec = Vector3.zero;
+            playerComData.AnimatorSetBool("DoMove", false);
             return;
         }
         Vector2 input = inputValue.Get<Vector2>();
 
+        playerComData.AnimatorSetBool("DoMove", true);
         _inputVec = new Vector3(input.x, 0, input.y);
     }
     public void OnRun(InputValue inputValue)

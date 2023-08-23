@@ -5,7 +5,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerRopeLauncher : MonoBehaviour
 {
+    private PlayerComData playerComData;
+
     [SerializeField] private Transform _ropePoint;
+    private Transform _handPoint;
     [SerializeField] private float _ropeDistance;
     [SerializeField] private float _ropeSpeed;
     [SerializeField] private float _ropeWidth;
@@ -27,7 +30,8 @@ public class PlayerRopeLauncher : MonoBehaviour
         _springJoint = GetComponent<SpringJoint>();
         _lineRenderer = GetComponentInChildren<LineRenderer>();
         _rb = GetComponent<Rigidbody>();
-
+        playerComData = GetComponent<PlayerComData>();
+        _handPoint = playerComData.GetAvataPos(HumanBodyBones.RightHand);
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
     }
@@ -52,10 +56,11 @@ public class PlayerRopeLauncher : MonoBehaviour
 
                 if (Mouse.current.leftButton.wasPressedThisFrame)
                 {
+                    playerComData.AnimatorSetBool("DoRope", true);
                     _lineRenderer.enabled = true;
 
                     _lineRenderer.SetPosition(0, _ropePoint.transform.position);
-                    _lineRenderer.SetPosition(1, transform.position + Vector3.up);
+                    _lineRenderer.SetPosition(1, _handPoint.position);
 
                     _springJoint.connectedAnchor = _hit.point;// - transform.position;
                     _springJoint.maxDistance = Vector3.Distance(_hit.point, transform.position + Vector3.up) * 0.8f;
@@ -73,7 +78,7 @@ public class PlayerRopeLauncher : MonoBehaviour
 
         if (Mouse.current.leftButton.isPressed)
         {
-            _lineRenderer.SetPosition(1, transform.position + Vector3.up);
+            _lineRenderer.SetPosition(1, _handPoint.position);
         }
 
         // 로프 보정.
@@ -81,6 +86,7 @@ public class PlayerRopeLauncher : MonoBehaviour
              (_springJoint.connectedAnchor.z <transform.position.z && Vector3.Angle(_springJoint.connectedAnchor - transform.position, Vector3.up) > 45f)
            )
         {
+            playerComData.AnimatorSetBool("DoRope", false);
             _lineRenderer.enabled = false;
             _springJoint.maxDistance = float.PositiveInfinity;
         }
