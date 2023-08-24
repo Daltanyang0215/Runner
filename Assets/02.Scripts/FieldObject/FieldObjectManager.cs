@@ -12,7 +12,7 @@ public class FieldObjectManager : MonoBehaviour
     private void Start()
     {
         activePrefab[5] = Instantiate(_objectPrefabs[0], transform.position, Quaternion.identity);
-        activePrefab[5].Setup(this, _player.transform, 0, 1000);
+        activePrefab[5].Setup(this, _player.transform, 5, 1000);
 
         for (int i = 0; i < 10; i++)
         {

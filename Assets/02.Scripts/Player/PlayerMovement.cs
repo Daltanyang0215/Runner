@@ -118,10 +118,10 @@ public class PlayerMovement : MonoBehaviour
         playerComData.AnimatorSetBool("DoMove", true);
         _inputVec = new Vector3(input.x, 0, input.y);
     }
-    public void OnRun(InputValue inputValue)
-    {
-        if (inputValue == null) return;
+    //public void OnRun(InputValue inputValue)
+    //{
+    //    if (inputValue == null) return;
 
-        _isRun = inputValue.isPressed;
-    }
+    //    _isRun = inputValue.isPressed;
+    //}
 }
