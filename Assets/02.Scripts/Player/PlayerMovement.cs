@@ -30,10 +30,19 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (transform.position.y < -100)
+        {
+            _rb.velocity = Vector3.zero;
+            _rb.useGravity = false;
+            return;
+        }
+
         SpeedContorll();
     }
     private void FixedUpdate()
     {
+        if (transform.position.y < -100) return;
+
         _rb.AddForce(_moveVec, ForceMode.Impulse);
     }
 
