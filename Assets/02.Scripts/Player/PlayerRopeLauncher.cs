@@ -21,6 +21,7 @@ public class PlayerRopeLauncher : MonoBehaviour
     private Camera _camera;
     private Rigidbody _rb;
 
+    private float ropeLerp;
     //private Ray CamaraRay => _camera.ScreenPointToRay(Vector3.right*Screen.width*0.5f+Vector3.up*Screen.height*0.6f);
     private Ray CamaraRay => _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
@@ -59,7 +60,8 @@ public class PlayerRopeLauncher : MonoBehaviour
                     playerComData.AnimatorSetBool("DoRope", true);
                     _lineRenderer.enabled = true;
 
-                    _lineRenderer.SetPosition(0, _ropePoint.transform.position);
+                    ropeLerp = 0;
+                    _lineRenderer.SetPosition(0, _handPoint.position);
                     _lineRenderer.SetPosition(1, _handPoint.position);
 
                     _springJoint.connectedAnchor = _hit.point;// - transform.position;
@@ -78,6 +80,12 @@ public class PlayerRopeLauncher : MonoBehaviour
 
         if (Mouse.current.leftButton.isPressed)
         {
+            if (ropeLerp < 1)
+            {
+                ropeLerp += Time.deltaTime * 10;
+            }
+            
+            _lineRenderer.SetPosition(0, Vector3.Lerp(_handPoint.position, _springJoint.connectedAnchor, ropeLerp));
             _lineRenderer.SetPosition(1, _handPoint.position);
         }
 
