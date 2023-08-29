@@ -18,8 +18,6 @@ public class FieldObjectMovement : MonoBehaviour
         _destroyDistance = distace;
     }
 
-    
-
     private void LateUpdate()
     {
         if (_playerPos.position.z - transform.position.z > _destroyDistance)
