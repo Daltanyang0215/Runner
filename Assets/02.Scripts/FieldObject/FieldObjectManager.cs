@@ -56,9 +56,9 @@ public class FieldObjectManager : MonoBehaviour
     {
         _lenghtText.text = _player.transform.position.z.ToString("0.0");
 
-        randomrangeMin = (int)(_player.transform.position.z / 2000f);
+        randomrangeMin = (int)(_player.transform.position.z / 1000f);
         randomrangeMin = randomrangeMin > ObjectPool.Instance.elements.Count / 2 ? ObjectPool.Instance.elements.Count / 2 : randomrangeMin;
-        randomrangeMax = (int)(_player.transform.position.z / 2000f)+ ObjectPool.Instance.elements.Count / 2;
+        randomrangeMax = (int)(_player.transform.position.z / 1000f)+ ObjectPool.Instance.elements.Count / 2;
         randomrangeMax = randomrangeMax > ObjectPool.Instance.elements.Count ? ObjectPool.Instance.elements.Count : randomrangeMax;
 
         if (_player.transform.position.y <= -100)

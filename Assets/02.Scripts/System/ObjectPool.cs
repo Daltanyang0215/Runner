@@ -20,7 +20,7 @@ public class ObjectPool : MonoBehaviour
     public List<ObjectPoolElement> elements = new List<ObjectPoolElement>();
     public Dictionary<string, Stack<GameObject>> objectPools = new Dictionary<string, Stack<GameObject>>();
 
-    private void Start()
+    private void Awake()
     {
         Init();
     }
@@ -29,7 +29,7 @@ public class ObjectPool : MonoBehaviour
     {
         foreach (ObjectPoolElement element in elements)
         {
-            if (!objectPools.ContainsKey(element.poolObject.name))
+            if (!objectPools.ContainsKey(element.poolName))
             {
                 Stack<GameObject> addlist = new Stack<GameObject>();
                 for (int i = 0; i < element.spwanCount; i++)
@@ -67,8 +67,10 @@ public class ObjectPool : MonoBehaviour
                     objectPools[name].Push(go);
                 }
 
-                
-                return Instantiate(addpool.poolObject, pos, rotate, parnet);
+                GameObject add = Instantiate(addpool.poolObject, pos, rotate, parnet);
+                add.name = addpool.poolName;
+
+                return add;
             }
         }
         else

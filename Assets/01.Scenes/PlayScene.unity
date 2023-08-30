@@ -1234,13 +1234,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1993793969}
-  _objectPrefabs:
-  - {fileID: 3764748842870969192, guid: eb47b9296e2a8b2489ee18ae1f93ea68, type: 3}
-  - {fileID: 3764748842870969192, guid: e179364debb60dd41b0aafeac2bc678e, type: 3}
-  - {fileID: 3764748842870969192, guid: fbbe7bbe340c85742a098db3c78d372f, type: 3}
-  - {fileID: 3764748842870969192, guid: 63daec22257f2a54897c2dfdf4c53994, type: 3}
-  - {fileID: 3764748842870969192, guid: 57e97224b724f3e429585f0e3ff98cd5, type: 3}
-  - {fileID: 3764748842870969192, guid: ad492224250811c4db02ef700df54925, type: 3}
   activePrefab:
   - {fileID: 0}
   - {fileID: 0}
@@ -1303,27 +1296,35 @@ MonoBehaviour:
   - poolName: Building0
     poolObject: {fileID: 7596261207683326051, guid: eb47b9296e2a8b2489ee18ae1f93ea68,
       type: 3}
-    spwanCount: 5
+    spwanCount: 10
   - poolName: Building1
+    poolObject: {fileID: 7596261207683326051, guid: f6da78f4a0f44674cbfda2e621b08fc6,
+      type: 3}
+    spwanCount: 10
+  - poolName: Building2
+    poolObject: {fileID: 7596261207683326051, guid: aafaadfd3b8172d458a527c756ec505b,
+      type: 3}
+    spwanCount: 10
+  - poolName: Building3
     poolObject: {fileID: 7596261207683326051, guid: e179364debb60dd41b0aafeac2bc678e,
       type: 3}
-    spwanCount: 5
-  - poolName: Building2
+    spwanCount: 10
+  - poolName: Building4
     poolObject: {fileID: 7596261207683326051, guid: fbbe7bbe340c85742a098db3c78d372f,
       type: 3}
-    spwanCount: 5
-  - poolName: Building3
+    spwanCount: 10
+  - poolName: Building5
     poolObject: {fileID: 7596261207683326051, guid: 63daec22257f2a54897c2dfdf4c53994,
       type: 3}
-    spwanCount: 5
-  - poolName: Building4
+    spwanCount: 10
+  - poolName: Building6
     poolObject: {fileID: 7596261207683326051, guid: 57e97224b724f3e429585f0e3ff98cd5,
       type: 3}
-    spwanCount: 5
-  - poolName: Building5
+    spwanCount: 10
+  - poolName: Building7
     poolObject: {fileID: 7596261207683326051, guid: ad492224250811c4db02ef700df54925,
       type: 3}
-    spwanCount: 5
+    spwanCount: 10
 --- !u!4 &1104953676
 Transform:
   m_ObjectHideFlags: 0

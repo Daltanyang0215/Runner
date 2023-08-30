@@ -8,7 +8,6 @@ public class FieldObjectMovement : MonoBehaviour
     private Transform _playerPos;
     private float _destroyDistance;
     private int _index;
-    [SerializeField] private Vector3 size = Vector3.one;
 
     public void Setup(FieldObjectManager manager, Transform plyerpos, int index, float distace)
     {
@@ -29,6 +28,6 @@ public class FieldObjectMovement : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(transform.position, size);
+        Gizmos.DrawWireCube(transform.position, Vector3.one);
     }
 }
