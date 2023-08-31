@@ -14,17 +14,18 @@ public class FieldObjectManager : MonoBehaviour
     [SerializeField] private TMP_Text _lenghtText;
     [SerializeField] private GameObject _gameoverPanel;
     [SerializeField] private TMP_Text _gameoverText;
+    [SerializeField] private TMP_Text _highpointText;
 
-    private int randomrangeMin;
-    private int randomrangeMax;
+    [SerializeField] private int randomrangeMin;
+    [SerializeField] private int randomrangeMax;
 
     private void Start()
     {
         randomrangeMin = 0;
-        randomrangeMax = ObjectPool.Instance.elements.Count/2;
+        randomrangeMax = ObjectPool.Instance.elements.Count / 2;
 
         activePrefab[5] = ObjectPool.Instance.Spwan($"Building0",
-                                                       transform.position ,
+                                                       transform.position,
                                                        Quaternion.identity,
                                                        transform).GetComponent<FieldObjectMovement>();
         activePrefab[5].Setup(this, _player.transform, 5, 1000);
@@ -56,14 +57,35 @@ public class FieldObjectManager : MonoBehaviour
     {
         _lenghtText.text = _player.transform.position.z.ToString("0.0");
 
-        randomrangeMin = (int)(_player.transform.position.z / 1000f);
+        randomrangeMin = (int)(_player.transform.position.z / 1500f);
         randomrangeMin = randomrangeMin > ObjectPool.Instance.elements.Count / 2 ? ObjectPool.Instance.elements.Count / 2 : randomrangeMin;
-        randomrangeMax = (int)(_player.transform.position.z / 1000f)+ ObjectPool.Instance.elements.Count / 2;
+        randomrangeMax = randomrangeMin + ObjectPool.Instance.elements.Count / 2;
         randomrangeMax = randomrangeMax > ObjectPool.Instance.elements.Count ? ObjectPool.Instance.elements.Count : randomrangeMax;
 
         if (_player.transform.position.y <= -100)
         {
+            float prevpoint;
+            if (float.TryParse(PlayerPrefs.GetString("HighPoint"), out prevpoint))
+            {
+
+                if (prevpoint < _player.transform.position.z)
+                {
+                    _highpointText.text = "신기록 달성 !";
+                    PlayerPrefs.SetString("HighPoint", _player.transform.position.z.ToString("0.0"));
+                }
+                else
+                {
+                    _highpointText.text = "최고기록 : " + prevpoint;
+                }
+            }
+            else
+            {
+                _highpointText.text = "신기록 달성 !";
+                PlayerPrefs.SetString("HighPoint", _player.transform.position.z.ToString("0.0"));
+            }
+
             _gameoverPanel.SetActive(true);
+
             _gameoverText.text = "지난 거리 :" + _player.transform.position.z.ToString("0.0");
         }
     }

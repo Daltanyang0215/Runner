@@ -103,7 +103,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool OnGoundCheck()
     {
-        return Physics.CheckBox(transform.position + Vector3.up * 0.6f, Vector3.one * 0.7f, Quaternion.identity, 1 << LayerMask.NameToLayer("Ground"));
+        return Physics.CheckBox(transform.position + Vector3.up * 0.3f, Vector3.one * 0.31f, Quaternion.identity, 1 << LayerMask.NameToLayer("Ground"));
     }
 
     public void OnJump()
