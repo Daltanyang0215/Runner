@@ -91,7 +91,7 @@ public class PlayerRopeLauncher : MonoBehaviour
 
         // 로프 보정.
         if (Mouse.current.leftButton.wasReleasedThisFrame ||
-             (_springJoint.connectedAnchor.z <transform.position.z && Vector3.Angle(_springJoint.connectedAnchor - transform.position, Vector3.up) > 55f)
+             (_springJoint.connectedAnchor.z <transform.position.z && Vector3.Angle(_springJoint.connectedAnchor - transform.position, Vector3.up) > 50f)
            )
         {
             playerComData.AnimatorSetBool("DoRope", false);
